@@ -1,3 +1,27 @@
 .fa {
     line-height: 32px;
 }
+
+.mdl-layout__drawer-button {
+    right: 0;
+    left: auto;
+}
+
+.mdl-layout__drawer {
+    right: 0;
+    left: auto;
+    transform: translateX(250px);
+    -webkit-transform: translateX(250px);
+}
+
+.color-label {
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    border-radius: 15px;
+}
+
+/* ======================== DROPDOWN MENU ============================== */
+
+
