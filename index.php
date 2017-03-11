@@ -74,6 +74,9 @@
                 <li class="mdl-menu__item" data-val="love"><i class="fa fa-heart" aria-hidden="true"></i> Love</li>
             </ul>
         </div>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+            Create Plotpoint
+        </button>
     </form>
     </nav>
   </div>

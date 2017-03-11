@@ -22,6 +22,14 @@
     border-radius: 15px;
 }
 
+.mdl-chip {
+    cursor: pointer;
+}
+
+form {
+    padding: 8px;
+}
+
 /* ======================== DROPDOWN MENU ============================== */
 
 
