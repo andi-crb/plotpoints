@@ -18,6 +18,18 @@
     </script>
     <link rel="stylesheet" href="/styles/main.css">
 </head>
+<?php
+    $points = array
+        (
+            array("thread"=>"red", "icon"=>"heart", "text"=>"Meets love interest"),
+            array("thread"=>"blue", "icon"=>"money", "text"=>"Looking for money"),
+            array("thread"=>"lime", "icon"=>"life-ring", "text"=>"Is saved"),
+            array("thread"=>"purple", "icon"=>"crosshairs", "text"=>"Assassination attempt"),
+            array("thread"=>"orange", "icon"=>"bolt", "text"=>"Lightening strikes"),
+            array("thread"=>"amber", "icon"=>"plane", "text"=>"Runs away overseas")
+            
+        );
+?>
 <body>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header">
@@ -82,21 +94,16 @@
   </div>
       <main class="mdl-layout__content">
         <div class="page-content">
-            <span class="mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content">
-                <span class="mdl-chip__contact mdl-color--brown mdl-color-text--white"><i class="fa fa-play" aria-hidden="true"></i></span>
-                <span class="mdl-chip__text">Quest starts</span>
-                <a href="#" class="mdl-chip__action"><i class="material-icons">cancel</i></a>
-            </span>
-            <span class="mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content">
-                <span class="mdl-chip__contact mdl-color--pink mdl-color-text--white"><i class="fa fa-heart" aria-hidden="true"></i></span>
-                <span class="mdl-chip__text">Meets love interest</span>
-                <a href="#" class="mdl-chip__action"><i class="material-icons">cancel</i></a>
-            </span>
-            <span class="mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content">
-                <span class="mdl-chip__contact mdl-color--red mdl-color-text--white"><i class="fa fa-bomb" aria-hidden="true"></i></span>
-                <span class="mdl-chip__text">Major battle</span>
-                <a href="#" class="mdl-chip__action"><i class="material-icons">cancel</i></a>
-            </span>
+            <?php
+                $arrlength = count($points);
+                for($x = 0; $x < $arrlength; $x++) {
+                    $currentpoint = $points[$x];
+                    echo "<span class=\"mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content\">";
+                    echo "<span class=\"mdl-chip__contact mdl-color--" . $currentpoint["thread"] . " mdl-color-text--white\"><i class=\"fa fa-" . $currentpoint["icon"] . "\" aria-hidden=\"true\"></i></span>";
+                    echo "<span class=\"mdl-chip__text\">" . $currentpoint["text"] . "</span>";
+                    echo "</span>";
+                };
+            ?>
         </div>
 
       </main>
