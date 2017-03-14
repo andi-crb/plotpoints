@@ -40,8 +40,15 @@
                     $("#main-canvas").append("<span class=\"mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content\"><span class=\"mdl-chip__contact mdl-color--" + newpoint.thread + " mdl-color-text--white\">" + newpoint.event + "</span><span class=\"mdl-chip__text\">" + newpoint.text + "</span></span>");
                     $( ".draggable" ).draggable();
                 }
+                $(".draggable").on("dblclick", function() {
+                    console.log("you double clicked");
+                    var element = document.getElementById("layout-drawer");
+                    element.classList.add("is-visible");
+                });
                 return false;
             });
+            
+
         } );
         
     </script>
@@ -56,7 +63,7 @@
 
     </div>
   </header>
-  <div class="mdl-layout__drawer">
+  <div class="mdl-layout__drawer" id="layout-drawer">
     <span class="mdl-layout-title">Title</span>
     <nav class="mdl-navigation">
         <form>
