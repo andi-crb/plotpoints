@@ -33,8 +33,13 @@
                 newpoint.thread = $("#thread").val();
                 newpoint.event = $("#event").val();
                 plotpoints.push(newpoint);
-                $("#main-canvas").append("<span class=\"mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content\"><span class=\"mdl-chip__contact mdl-color--" + newpoint.thread + " mdl-color-text--white\"><i class=\"fa fa-" + newpoint.event + "\" aria-hidden=\"true\"></i></span><span class=\"mdl-chip__text\">" + newpoint.text + "</span></span>");
-                $( ".draggable" ).draggable();
+                if (newpoint.event.length > 1) {
+                    $("#main-canvas").append("<span class=\"mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content\"><span class=\"mdl-chip__contact mdl-color--" + newpoint.thread + " mdl-color-text--white\"><i class=\"fa fa-" + newpoint.event + "\" aria-hidden=\"true\"></i></span><span class=\"mdl-chip__text\">" + newpoint.text + "</span></span>");
+                    $( ".draggable" ).draggable();    
+                } else {
+                    $("#main-canvas").append("<span class=\"mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content\"><span class=\"mdl-chip__contact mdl-color--" + newpoint.thread + " mdl-color-text--white\">" + newpoint.event + "</span><span class=\"mdl-chip__text\">" + newpoint.text + "</span></span>");
+                    $( ".draggable" ).draggable();
+                }
                 return false;
             });
         } );
@@ -94,7 +99,7 @@
                 <li class="mdl-menu__item" data-val="ball-o"><i class="fa fa-soccer-ball-o" aria-hidden="true"></i> Sport</li>
                 <li class="mdl-menu__item" data-val="snowflake-o"><i class="fa fa-snowflake-o" aria-hidden="true"></i> Snow</li>
                 <li class="mdl-menu__item" data-val="superpowers"><i class="fa fa-superpowers" aria-hidden="true"></i> Superpowers</li>
-                <li class="mdl-menu__item" data-val="handshake"><i class="fa fa-handshake" aria-hidden="true"></i> Meet</li>
+                <li class="mdl-menu__item" data-val="handshake-o"><i class="fa fa-handshake-o" aria-hidden="true"></i> Meet</li>
                 <li class="mdl-menu__item" data-val="bolt"><i class="fa fa-bolt" aria-hidden="true"></i> Lightening</li>
                 <li class="mdl-menu__item" data-val="birthday-cake"><i class="fa fa-birthday-cake" aria-hidden="true"></i> Birthday</li>
                 <li class="mdl-menu__item" data-val="cogs"><i class="fa fa-cogs" aria-hidden="true"></i> Machinery</li>
