@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-light_blue.min.css" />
-        <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
            <!--getmdl-select-->   
    <link rel="stylesheet" href="https://cdn.rawgit.com/CreativeIT/getmdl-select/master/getmdl-select.min.css">
    <!--<script defer src="https://cdn.rawgit.com/CreativeIT/getmdl-select/master/getmdl-select.min.js"></script>-->
@@ -18,12 +18,10 @@
             $( ".draggable" ).draggable();
             
             $("#thread-select li").on("click", function(){
-                alert($(this).data("val"));
                $("#thread").val($(this).data("val")); 
             });
             
             $("#event-select li").on("click", function(){
-                alert($(this).data("val"));
                $("#event").val($(this).data("val")); 
             });
             
@@ -44,6 +42,8 @@
                     console.log("you double clicked");
                     var element = document.getElementById("layout-drawer");
                     element.classList.add("is-visible");
+                    var element2 = document.getElementsByClassName("mdl-layout__obfuscator");
+                    element2.classList.add("is-visible");
                 });
                 return false;
             });
