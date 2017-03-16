@@ -13,7 +13,28 @@
     <script src="https://use.fontawesome.com/5462403d39.js"></script>
     <script>
         var plotpoints = [];
-        var pointFromDb = {}
+        var pointFromDb = {};
+        
+        var threadColours = {
+            one: "orange",
+            two: "yellow",
+            three: "amber",
+            four: "light-green",
+            five: "green",
+            six: "teal",
+            seven: "cyan",
+            eight: "light-blue",
+            nine: "blue",
+            ten: "indigo",
+            eleven: "deep-purple",
+            twelve: "purple",
+            thirteen: "pink",
+            fourteen: "red",
+            fifteen: "deep-orange",
+            sixteen: "grey",
+            seventeen: "blue-grey",
+            eighteen: "brown"
+        };
         
         function createChip (chipDetails){
                 plotpoints.push(chipDetails);
@@ -47,9 +68,11 @@
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     var objFromDb = JSON.parse(this.responseText);
-                    for (i = 0; i < 3; i++){
+                    for (i = 0; i < 7; i++){
                         pointFromDb.text = objFromDb[i][1]
-                        pointFromDb.thread = objFromDb[i][3]
+                        pointFromDb.rawThread = objFromDb[i][3]
+                        console.log(pointFromDb.rawThread)
+                        pointFromDb.thread = threadColours[pointFromDb.rawThread]
                         pointFromDb.event = objFromDb[i][2]
                         createChip(pointFromDb)
                     }
@@ -74,7 +97,6 @@
                 createChip(newpoint)
             });
             
-
         } );
         
     </script>
