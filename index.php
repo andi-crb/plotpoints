@@ -13,9 +13,50 @@
     <script src="https://use.fontawesome.com/5462403d39.js"></script>
     <script>
         var plotpoints = [];
+        var pointFromDb = {}
+        
+        function createChip (chipDetails){
+                plotpoints.push(chipDetails);
+                if (chipDetails.event.length > 1) {
+                    $("#main-canvas").append("<span class=\"mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content\"><span class=\"mdl-chip__contact mdl-color--" + chipDetails.thread + " mdl-color-text--white\"><i class=\"fa fa-" + chipDetails.event + "\" aria-hidden=\"true\"></i></span><span class=\"mdl-chip__text\">" + chipDetails.text + "</span></span>");
+                    $( ".draggable" ).draggable();    
+                } else {
+                    $("#main-canvas").append("<span class=\"mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content\"><span class=\"mdl-chip__contact mdl-color--" + chipDetails.thread + " mdl-color-text--white\">" + chipDetails.event + "</span><span class=\"mdl-chip__text\">" + chipDetails.text + "</span></span>");
+                    $( ".draggable" ).draggable();
+                }
+                $(".draggable").on("dblclick", function() {
+                    console.log("you double clicked");
+                    var element = document.getElementById("layout-drawer");
+                    element.classList.add("is-visible");
+                    var element2 = document.getElementsByClassName("mdl-layout__obfuscator");
+                    element2.classList.add("is-visible");
+                });
+                return false;
+        }
         
         $( function() {
             $( ".draggable" ).draggable();
+            
+            if (window.XMLHttpRequest) {
+                // code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                // code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var objFromDb = JSON.parse(this.responseText);
+                    for (i = 0; i < 3; i++){
+                        pointFromDb.text = objFromDb[i][1]
+                        pointFromDb.thread = objFromDb[i][3]
+                        pointFromDb.event = objFromDb[i][2]
+                        createChip(pointFromDb)
+                    }
+                }
+            };
+            xmlhttp.open("GET","getpoints.php",true);
+            xmlhttp.send();
             
             $("#thread-select li").on("click", function(){
                $("#thread").val($(this).data("val")); 
@@ -30,22 +71,7 @@
                 newpoint.text = $("#plot-event").val();
                 newpoint.thread = $("#thread").val();
                 newpoint.event = $("#event").val();
-                plotpoints.push(newpoint);
-                if (newpoint.event.length > 1) {
-                    $("#main-canvas").append("<span class=\"mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content\"><span class=\"mdl-chip__contact mdl-color--" + newpoint.thread + " mdl-color-text--white\"><i class=\"fa fa-" + newpoint.event + "\" aria-hidden=\"true\"></i></span><span class=\"mdl-chip__text\">" + newpoint.text + "</span></span>");
-                    $( ".draggable" ).draggable();    
-                } else {
-                    $("#main-canvas").append("<span class=\"mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content\"><span class=\"mdl-chip__contact mdl-color--" + newpoint.thread + " mdl-color-text--white\">" + newpoint.event + "</span><span class=\"mdl-chip__text\">" + newpoint.text + "</span></span>");
-                    $( ".draggable" ).draggable();
-                }
-                $(".draggable").on("dblclick", function() {
-                    console.log("you double clicked");
-                    var element = document.getElementById("layout-drawer");
-                    element.classList.add("is-visible");
-                    var element2 = document.getElementsByClassName("mdl-layout__obfuscator");
-                    element2.classList.add("is-visible");
-                });
-                return false;
+                createChip(newpoint)
             });
             
 
