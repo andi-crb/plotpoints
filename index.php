@@ -36,22 +36,35 @@
             eighteen: "brown"
         };
         
+        var xPos = 0;
+        var yPos = 0;
+        
         function createChip (chipDetails){
+
                 plotpoints.push(chipDetails);
                 if (chipDetails.event.length > 1) {
-                    $("#main-canvas").append("<span class=\"mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content\"><span class=\"mdl-chip__contact mdl-color--" + chipDetails.thread + " mdl-color-text--white\"><i class=\"fa fa-" + chipDetails.event + "\" aria-hidden=\"true\"></i></span><span class=\"mdl-chip__text\">" + chipDetails.text + "</span></span>");
-                    $( ".draggable" ).draggable();    
+                    $("#main-canvas").append("<span class=\"mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content\" style=\"left:" + chipDetails.x +"px; top:" + chipDetails.y + "px;\"><span class=\"mdl-chip__contact mdl-color--" + chipDetails.thread + " mdl-color-text--white\"><i class=\"fa fa-" + chipDetails.event + "\" aria-hidden=\"true\"></i></span><span class=\"mdl-chip__text\">" + chipDetails.text + "</span></span>");
                 } else {
-                    $("#main-canvas").append("<span class=\"mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content\"><span class=\"mdl-chip__contact mdl-color--" + chipDetails.thread + " mdl-color-text--white\">" + chipDetails.event + "</span><span class=\"mdl-chip__text\">" + chipDetails.text + "</span></span>");
-                    $( ".draggable" ).draggable();
+                    $("#main-canvas").append("<span class=\"mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content\"  style=\"left:" + chipDetails.x +"px; top:" + chipDetails.y + "px;\"><span class=\"mdl-chip__contact mdl-color--" + chipDetails.thread + " mdl-color-text--white\">" + chipDetails.event + "</span><span class=\"mdl-chip__text\">" + chipDetails.text + "</span></span>");
                 }
+                $( ".draggable" ).draggable(
+                    {
+                        drag: function(){
+                            var offset = $(this).offset();
+                            xPos = offset.left;
+                            yPos = offset.top;
+                        }
+                });
                 $(".draggable").on("dblclick", function() {
                     console.log("you double clicked");
                     var element = document.getElementById("layout-drawer");
                     element.classList.add("is-visible");
-                    var element2 = document.getElementsByClassName("mdl-layout__obfuscator");
-                    element2.classList.add("is-visible");
+                    element = document.getElementsByClassName("mdl-layout__obfuscator");
+                    element.classList.add("is-visible");
                 });
+                $(".draggable").on("mouseup", function(){
+                    console.log(xPos, yPos);
+                })
                 return false;
         }
         
@@ -80,6 +93,8 @@
             };
             xmlhttp.open("GET","getpoints.php",true);
             xmlhttp.send();
+            
+
             
             $("#thread-select li").on("click", function(){
                $("#thread").val($(this).data("val")); 
