@@ -24,7 +24,7 @@
     
     $json = array();
         while($row = mysqli_fetch_array($result)) {
-        array_push($json, array($row['id'], $row['text'], $row['event'], $row['thread']));
+        array_push($json, array($row['id'], $row['text'], $row['event'], $row['thread'], $row['xposition'], $row['yposition']));
     }
 
     header('Content-Type: application/json');

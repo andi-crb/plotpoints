@@ -38,14 +38,14 @@
         
         var xPos = 0;
         var yPos = 0;
-        
+
         function createChip (chipDetails){
 
                 plotpoints.push(chipDetails);
                 if (chipDetails.event.length > 1) {
-                    $("#main-canvas").append("<span class=\"mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content\" style=\"left:" + chipDetails.x +"px; top:" + chipDetails.y + "px;\"><span class=\"mdl-chip__contact mdl-color--" + chipDetails.thread + " mdl-color-text--white\"><i class=\"fa fa-" + chipDetails.event + "\" aria-hidden=\"true\"></i></span><span class=\"mdl-chip__text\">" + chipDetails.text + "</span></span>");
+                    $("#main-canvas").append("<span class=\"mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content\" style=\"position: auto; left:" + chipDetails.xposition +"px; top:" + chipDetails.yposition + "px;\"><span class=\"mdl-chip__contact mdl-color--" + chipDetails.thread + " mdl-color-text--white\"><i class=\"fa fa-" + chipDetails.event + "\" aria-hidden=\"true\"></i></span><span class=\"mdl-chip__text\">" + chipDetails.text + "</span></span>");
                 } else {
-                    $("#main-canvas").append("<span class=\"mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content\"  style=\"left:" + chipDetails.x +"px; top:" + chipDetails.y + "px;\"><span class=\"mdl-chip__contact mdl-color--" + chipDetails.thread + " mdl-color-text--white\">" + chipDetails.event + "</span><span class=\"mdl-chip__text\">" + chipDetails.text + "</span></span>");
+                    $("#main-canvas").append("<span class=\"mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content\"  style=\"position: auto; left:" + chipDetails.x +"px; top:" + chipDetails.y + "px;\"><span class=\"mdl-chip__contact mdl-color--" + chipDetails.thread + " mdl-color-text--white\">" + chipDetails.event + "</span><span class=\"mdl-chip__text\">" + chipDetails.text + "</span></span>");
                 }
                 $( ".draggable" ).draggable(
                     {
@@ -81,12 +81,14 @@
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     var objFromDb = JSON.parse(this.responseText);
-                    for (i = 0; i < 7; i++){
+                    for (i = 0; i < 11; i++){
                         pointFromDb.text = objFromDb[i][1]
                         pointFromDb.rawThread = objFromDb[i][3]
                         console.log(pointFromDb.rawThread)
                         pointFromDb.thread = threadColours[pointFromDb.rawThread]
                         pointFromDb.event = objFromDb[i][2]
+                        pointFromDb.xposition = objFromDb[i][4];
+                        pointFromDb.yposition = objFromDb[i][5];
                         createChip(pointFromDb)
                     }
                 }
