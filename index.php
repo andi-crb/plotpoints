@@ -38,15 +38,34 @@
         
         var xPos = 0;
         var yPos = 0;
+        
+        function updateAjax(x, y, id) {
+            $.ajax({
+                url: 'updatepoint.php',
+                method: 'POST',
+                data: {
+                    action: 'save',
+                    x: x, 
+                    y: y,
+                    id: id
+                },
+                dataType:'json',
+                success: function(data) {
+                    alert(data.success);
+                }
+            });
+            return false; 
+        }
 
         function createChip (chipDetails){
 
                 plotpoints.push(chipDetails);
                 if (chipDetails.event.length > 1) {
-                    $("#main-canvas").append("<span class=\"mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content\" style=\"position: auto; left:" + chipDetails.xposition +"px; top:" + chipDetails.yposition + "px;\"><span class=\"mdl-chip__contact mdl-color--" + chipDetails.thread + " mdl-color-text--white\"><i class=\"fa fa-" + chipDetails.event + "\" aria-hidden=\"true\"></i></span><span class=\"mdl-chip__text\">" + chipDetails.text + "</span></span>");
+                    $("#main-canvas").append("<span class=\"mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content\" id=\"" + chipDetails.id + "\" style=\"position: auto; left:" + chipDetails.xposition +"px; top:" + chipDetails.yposition + "px;\"><span class=\"mdl-chip__contact mdl-color--" + chipDetails.thread + " mdl-color-text--white\"><i class=\"fa fa-" + chipDetails.event + "\" aria-hidden=\"true\"></i></span><span class=\"mdl-chip__text\">" + chipDetails.text + "</span></span>");
                 } else {
-                    $("#main-canvas").append("<span class=\"mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content\"  style=\"position: auto; left:" + chipDetails.x +"px; top:" + chipDetails.y + "px;\"><span class=\"mdl-chip__contact mdl-color--" + chipDetails.thread + " mdl-color-text--white\">" + chipDetails.event + "</span><span class=\"mdl-chip__text\">" + chipDetails.text + "</span></span>");
+                    $("#main-canvas").append("<span class=\"mdl-chip mdl-chip--contact mdl-chip--deletable draggable ui-widget-content\" id=\"" + chipDetails.id + "\"   style=\"position: auto; left:" + chipDetails.x +"px; top:" + chipDetails.y + "px;\"><span class=\"mdl-chip__contact mdl-color--" + chipDetails.thread + " mdl-color-text--white\">" + chipDetails.event + "</span><span class=\"mdl-chip__text\">" + chipDetails.text + "</span></span>");
                 }
+                
                 $( ".draggable" ).draggable(
                     {
                         drag: function(){
@@ -59,11 +78,13 @@
                     console.log("you double clicked");
                     var element = document.getElementById("layout-drawer");
                     element.classList.add("is-visible");
-                    element = document.getElementsByClassName("mdl-layout__obfuscator");
-                    element.classList.add("is-visible");
+                    var elementTwo = document.getElementsByClassName("mdl-layout__obfuscator");
+                    elementTwo.classList.add("is-visible");
                 });
-                $(".draggable").on("mouseup", function(){
-                    console.log(xPos, yPos);
+                $(".draggable").unbind("mouseup").on("mouseup", function(){
+                    console.log(xPos, yPos, $(this).attr('id'));
+                    xmlhttp.open("POST","updatepoint.php",true);
+                    xmlhttp.send();
                 })
                 return false;
         }
@@ -82,6 +103,7 @@
                 if (this.readyState == 4 && this.status == 200) {
                     var objFromDb = JSON.parse(this.responseText);
                     for (i = 0; i < 11; i++){
+                        pointFromDb.id = objFromDb[i][0]
                         pointFromDb.text = objFromDb[i][1]
                         pointFromDb.rawThread = objFromDb[i][3]
                         console.log(pointFromDb.rawThread)
@@ -132,6 +154,16 @@
     <span class="mdl-layout-title">Title</span>
     <nav class="mdl-navigation">
         <form>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+              New Point
+            </button>
+            <br />
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+              Filter
+            </button>
+        </form>
+    <p>Back</p>
+    <form>
       <div class="mdl-textfield mdl-js-textfield">
         <input class="mdl-textfield__input" type="text" id="plot-event">
         <label class="mdl-textfield__label" for="plot-event">Plot Event</label>
@@ -241,6 +273,7 @@
         </div>
 
       </main>
+      <div class="mdl-layout__obfuscator"></div>
     </div>
 </body>
 </html>
